@@ -7,6 +7,18 @@ spring:
     port: 5672
     password: admin
     username: admin
+    publisher-confirms: true #支持发布确认
+    publisher-returns: true  #支持发布返回
+    listener:
+      simple:
+        acknowledge-mode: manual #采用手动应答
+        retry:
+          enabled: true #是否支持重试
+          initial-interval: 1000 # 第一次和第二次 尝试发布或交付(此处是消费者交付,template.retry中是消费者发布)的 间隔时间
+          max-interval: 2000   # 两次重试的最大间隔
+          max-attempts: 2  # 尝试发布或交付的 最大次数(重试次数)
+          multiplier: 1.0  # 每次重试都比上一次重试间隔时长大x倍
+          stateless: true  # 重试是无状态还是有状态的
 swagger:
   authorization:
     key-name: TOKEN

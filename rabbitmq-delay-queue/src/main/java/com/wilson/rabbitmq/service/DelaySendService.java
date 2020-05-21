@@ -4,6 +4,7 @@
 package com.wilson.rabbitmq.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wilson.rabbitmq.config.RabbitConfig;
 import com.wilson.rabbitmq.enums.ErrorCodeEnum;
 import com.wilson.rabbitmq.exception.SystemException;
@@ -11,6 +12,7 @@ import com.wilson.rabbitmq.utils.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,8 @@ public class DelaySendService {
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     /**
      * 发送延时消息，每个消息都自己有自己的过期时间
@@ -78,4 +82,26 @@ public class DelaySendService {
             throw new SystemException(ErrorCodeEnum.UNKNOWING_ERROR);
         }
     }
+    
+    /**
+	* 描述:  运营平台下发设备配置数据数据到物联网平台
+	* @author lilun
+	* @param Object jsonStr 需要发送的json传 JSONObject.toJSON(sendMqInfoDto) ;
+	* @return boolean  true 成功  false 失败
+	* @date 2019-09-24 15:13:42
+	 */	
+	public boolean sendMsg(Object jsonStr) {
+		boolean result = true;
+		try {
+			org.springframework.amqp.core.Message msg = MessageBuilder.withBody(objectMapper.writeValueAsBytes(jsonStr)).build();
+			rabbitTemplate.convertAndSend(RabbitConfig.DELAY_QUEUE_EXCHANGE, RabbitConfig.DELAY_ROUTING_KEY,msg);
+			log.info("发送成功");
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			result = false;
+		}
+		return result;
+	}
+    
+    
 }
