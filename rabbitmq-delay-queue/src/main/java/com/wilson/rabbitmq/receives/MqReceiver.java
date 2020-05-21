@@ -35,7 +35,7 @@ public class MqReceiver {
 	
 	
 	/**
-	 * @Description: 接收mq发来的消息
+	 * @Description: 接收mq发来的消息,动态配置queue，使用时放开注释即可
 	 * @param content
 	 * @param headers
 	 * @param channel
@@ -44,8 +44,8 @@ public class MqReceiver {
 	 * @author lilun
 	 * @date 2020-05-21 04:13:14
 	 */
-	@RabbitListener(bindings = @QueueBinding(value = @Queue(value = "${rmpirs-mq.heartbeat-manage.queue}", durable = "true"), exchange = @Exchange(name = "${rmpirs-mq.heartbeat-manage.exchange}", durable = "true", type = ExchangeTypes.TOPIC), key = "${rmpirs-mq.heartbeat-manage.routing-key}"))
-	@RabbitHandler
+	//@RabbitListener(bindings = @QueueBinding(value = @Queue(value = "${rmpirs-mq.heartbeat-manage.queue}", durable = "true"), exchange = @Exchange(name = "${rmpirs-mq.heartbeat-manage.exchange}", durable = "true", type = ExchangeTypes.TOPIC), key = "${rmpirs-mq.heartbeat-manage.routing-key}"))
+	//@RabbitHandler
 	public void receiveMessage(@Payload byte[] content, @Headers Map<String, Object> headers, Channel channel,Message msg)
 			throws IOException {
 		Long deliveryTag = (Long) headers.get(AmqpHeaders.DELIVERY_TAG);
