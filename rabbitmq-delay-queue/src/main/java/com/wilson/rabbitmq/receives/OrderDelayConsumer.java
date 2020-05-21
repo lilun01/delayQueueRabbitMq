@@ -12,10 +12,12 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 /**
- * 类注释
- * @author wilson wei
+ * 
+ * @Title: OrderDelayConsumer.java
+ * @Description: 消息队列消费者，消费从其他队列过期来的消息，实现延迟消费
+ * @author lilun
+ * @date 2020-05-21 03:50:02 
  * @version 1.0
- * @since 2018/8/19 11:53
  */
 @Component
 @RabbitListener(queues = "process_queue")
