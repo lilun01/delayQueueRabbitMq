@@ -1,0 +1,57 @@
+
+#ignorecompiled output
+tmp
+target
+venv
+logs
+classes
+lib
+file
+webapp
+node_modules
+webapp
+static
+rmbsp
+
+#ignore file
+.idea
+.settings
+.project
+.classpath
+.c9
+.DS_Store
+
+#ignore folder
+*.mdb
+*.ldb
+*.sln
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.iml
+*.db
+*.launch
+*.sublime-workspace
+
+#ignore compression file
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.via
+*.tmp
+*.err
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

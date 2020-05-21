@@ -1,0 +1,25 @@
+---
+server:
+  port: 8083
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    password: admin
+    username: admin
+swagger:
+  authorization:
+    key-name: TOKEN
+    name: Authorization
+  licenseUrl: https://www.apache.org/licenses/LICENSE-2.0.html
+  license: Apache License, Version 2.0
+  ui-config:
+    display-request-duration: true
+  contact:
+    name: wilson
+    email: weishuyuan001@ke.com
+  description: a rabbitmq delay queue api doc
+  base-package: com.wilson.rabbitmq
+  title: open study community
+  version: 1.0.0
+  enabled: true
