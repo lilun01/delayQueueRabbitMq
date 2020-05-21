@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 2018/8/17 17:22
  */
 @Configuration
-public class RabbitConfig {
+public class RabbitQueueConfig {
 
     /******************************************************** 声明交换器 ************************************************************/
     /**

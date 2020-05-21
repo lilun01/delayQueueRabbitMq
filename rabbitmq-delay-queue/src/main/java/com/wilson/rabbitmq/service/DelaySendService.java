@@ -5,7 +5,7 @@ package com.wilson.rabbitmq.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wilson.rabbitmq.config.RabbitConfig;
+import com.wilson.rabbitmq.config.RabbitQueueConfig;
 import com.wilson.rabbitmq.enums.ErrorCodeEnum;
 import com.wilson.rabbitmq.exception.SystemException;
 import com.wilson.rabbitmq.utils.Message;
@@ -50,7 +50,7 @@ public class DelaySendService {
 
         // 设置发送时间，开始发送
         try {
-            rabbitTemplate.convertAndSend(RabbitConfig.DELAY_EXCHANGE, RabbitConfig.DELAY_ROUTING_KEY, msg,
+            rabbitTemplate.convertAndSend(RabbitQueueConfig.DELAY_EXCHANGE, RabbitQueueConfig.DELAY_ROUTING_KEY, msg,
                     message -> {
                         message.getMessageProperties().setExpiration(String.valueOf(msg.getTtl()));
                         return message;
@@ -76,7 +76,7 @@ public class DelaySendService {
 
         // 设置发送时间，开始发送
         try {
-            rabbitTemplate.convertAndSend(RabbitConfig.DELAY_QUEUE_EXCHANGE, RabbitConfig.DELAY_ROUTING_KEY, msg);
+            rabbitTemplate.convertAndSend(RabbitQueueConfig.DELAY_QUEUE_EXCHANGE, RabbitQueueConfig.DELAY_ROUTING_KEY, msg);
         } catch (AmqpException e) {
             log.error("消息发送失败，请检查消息中间件是否正常", JSONObject.toJSONString(msg));
             throw new SystemException(ErrorCodeEnum.UNKNOWING_ERROR);
@@ -94,7 +94,7 @@ public class DelaySendService {
 		boolean result = true;
 		try {
 			org.springframework.amqp.core.Message msg = MessageBuilder.withBody(objectMapper.writeValueAsBytes(jsonStr)).build();
-			rabbitTemplate.convertAndSend(RabbitConfig.DELAY_QUEUE_EXCHANGE, RabbitConfig.DELAY_ROUTING_KEY,msg);
+			rabbitTemplate.convertAndSend(RabbitQueueConfig.DELAY_QUEUE_EXCHANGE, RabbitQueueConfig.DELAY_ROUTING_KEY,msg);
 			log.info("发送成功");
 		} catch (Exception e) {
 			log.error(e.getMessage());
